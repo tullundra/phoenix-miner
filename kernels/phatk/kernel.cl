@@ -48,7 +48,7 @@ __constant uint H[8] = {
 	#define Ch(x, y, z) amd_bytealign(x, y, z)
 	
 	// Ma can also be implemented in terms of BFI_INT...
-	#define Ma(x, y, z) amd_bytealign((y), (x | z), (z & x))
+	#define Ma(x, y, z) amd_bytealign( (z^x), (y), (x) )
 #else
 	#define Ch(x, y, z) (z ^ (x & (y ^ z)))
 	#define Ma(x, y, z) ((x & z) | (y & (x | z)))
@@ -128,6 +128,7 @@ void search(	const uint state0, const uint state1, const uint state2, const uint
 	W[15]=0x00000280U;
 	W[16] = W16;
 	W[17] = W17;
+
 	W[19] = P1(19) + P2(19) + P3(19);
 	W[18] = P1(18) + P3(18) + P4(18);
 	W[20] = P2(20) + P3(20) + P4(20);
